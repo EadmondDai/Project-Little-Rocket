@@ -128,6 +128,11 @@ Light:
   m_CorrespondingSourceObject: {fileID: 5294652153496492915, guid: d3657ddb28f883d46ad956f0a3e8b326, type: 3}
   m_PrefabInstance: {fileID: 5294652154133834217}
   m_PrefabAsset: {fileID: 0}
+--- !u!82 &1191114356 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 1191114356, guid: e74d3543f8b1a5a41be856e5a04698fe, type: 3}
+  m_PrefabInstance: {fileID: 2143888966525021885}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2143888966525021885
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -135,10 +140,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1689021341, guid: e74d3543f8b1a5a41be856e5a04698fe, type: 3}
-      propertyPath: rotateMultiplier
-      value: 0.2
+    - target: {fileID: 1191114356, guid: e74d3543f8b1a5a41be856e5a04698fe, type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1689021341, guid: e74d3543f8b1a5a41be856e5a04698fe, type: 3}
+      propertyPath: thrustSound
+      value: 
+      objectReference: {fileID: 1191114356}
     - target: {fileID: 9020839878773746150, guid: e74d3543f8b1a5a41be856e5a04698fe, type: 3}
       propertyPath: m_Name
       value: Rocket

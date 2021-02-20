@@ -1,2 +1,2 @@
 # Project-Little-Rocket
- This is a small rocket game made with Unity
+ Sometimes, even very simple game can be fun. I made this try to remember how to us Unity.
