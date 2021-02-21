@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class RocketBehavior : MonoBehaviour
 {
-    public AudioSource thrustSound;
-    public Rigidbody rocketBody;
-    public float forceMultyplier = 5.0f;
-    public float rotateMultiplier = 1.0f;
+    [SerializeField] AudioSource thrustSound;
+    [SerializeField] Rigidbody rocketBody;
+    [SerializeField] float forceMultyplier = 5.0f;
+    [SerializeField] float rotateMultiplier = 1.0f;
     private bool isPlaying = false;
     private bool togglePlay = false;
 
@@ -24,31 +24,35 @@ public class RocketBehavior : MonoBehaviour
 
     void processInput()
     {
-        hanldeSound();
+        handleThrusting();
 
-        handleMovement();
+        handleRotate();
     }
 
-    private void handleMovement()
+    private void OnCollisionEnter(Collision collision)
+    {
+       switch(collision.gameObject.tag)
+        {
+            case "Friendly":
+                print("Don't worry"); //TODO remove
+                break;
+            case "Fual":
+                print("You got fuel"); //TODO remove
+                break;
+            default:
+                print("You died"); //TODO remove
+                // And kill the player
+                break;
+        }
+    }
+
+    void handleThrusting()
     {
         if (Input.GetKey(KeyCode.Space))
         {
             rocketBody.AddRelativeForce(Vector3.up * forceMultyplier);
         }
 
-        if (Input.GetKey(KeyCode.A))
-        {
-            transform.Rotate(Vector3.forward, rotateMultiplier);
-        }
-
-        if (Input.GetKey(KeyCode.D))
-        {
-            transform.Rotate(Vector3.forward, -rotateMultiplier);
-        }
-    }
-
-    private void hanldeSound()
-    {
         if (Input.GetKeyDown(KeyCode.Space))
         {
             togglePlay = true;
@@ -64,12 +68,27 @@ public class RocketBehavior : MonoBehaviour
             thrustSound.Play();
             isPlaying = true;
         }
-        
 
-        if(!togglePlay && isPlaying){
+        if (!togglePlay && isPlaying)
+        {
             thrustSound.Stop();
             isPlaying = false;
         }
-        
+    }
+
+    void handleRotate()
+    {
+
+        float deltaForce = rotateMultiplier * Time.deltaTime;
+        if (Input.GetKey(KeyCode.A))
+        {
+
+            transform.Rotate(Vector3.forward * deltaForce);
+        }
+
+        if (Input.GetKey(KeyCode.D))
+        {
+            transform.Rotate(Vector3.forward * -deltaForce);
+        }
     }
 }
