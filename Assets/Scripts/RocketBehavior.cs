@@ -7,7 +7,8 @@ using UnityEngine.SceneManagement;
 enum GameState
 {
     playing,
-    transending,
+    dying,
+    winning,
 }
 
 public class RocketBehavior : MonoBehaviour
@@ -16,12 +17,18 @@ public class RocketBehavior : MonoBehaviour
     [SerializeField] AudioClip thrustClip;
     [SerializeField] AudioClip deathClip;
     [SerializeField] AudioClip victoryClip;
+
     [SerializeField] Rigidbody rocketBody;
+
     [SerializeField] float forceMultyplier = 5.0f;
     [SerializeField] float rotateMultiplier = 1.0f;
+
+    [SerializeField] ParticleSystem thrustParticle;
+    [SerializeField] ParticleSystem deathParticle;
+    [SerializeField] ParticleSystem victoryParticle;
    
     private bool isPlayingThruster = false;
-    private bool togglePlayThruster = false;
+    private bool toggleThruster = false;
     [SerializeField] float transitionTime = 1.0f;
     static private int currentSceneIdx = 0;
     private GameState gameState = GameState.playing;
@@ -71,7 +78,8 @@ public class RocketBehavior : MonoBehaviour
         {
             audioSource.Stop();
             audioSource.PlayOneShot(victoryClip);
-            gameState = GameState.transending;
+            victoryParticle.Play();
+            gameState = GameState.winning;
             Invoke("loadNextScene", transitionTime);
         }
     }
@@ -82,7 +90,8 @@ public class RocketBehavior : MonoBehaviour
         {
             audioSource.Stop();
             audioSource.PlayOneShot(deathClip);
-            gameState = GameState.transending;
+            deathParticle.Play();
+            gameState = GameState.dying;
             Invoke("resetLevel", transitionTime);
         }
     }
@@ -111,24 +120,34 @@ public class RocketBehavior : MonoBehaviour
         //Thrust Sound
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            togglePlayThruster = true;
+            toggleThruster = true;
         }
 
         if (Input.GetKeyUp(KeyCode.Space))
         {
-            togglePlayThruster = false;
+            toggleThruster = false;
         }
 
-        if (togglePlayThruster && !isPlayingThruster)
+        if (toggleThruster && !isPlayingThruster)
         {
             audioSource.PlayOneShot(thrustClip);
             isPlayingThruster = true;
         }
 
-        if (!togglePlayThruster && isPlayingThruster)
+        if (!toggleThruster && isPlayingThruster)
         {
             audioSource.Stop();
             isPlayingThruster = false;
+        }
+
+        if(toggleThruster && !thrustParticle.isPlaying)
+        {
+            thrustParticle.Play();
+        }
+
+        if(!toggleThruster && thrustParticle.isPlaying)
+        {
+            thrustParticle.Stop();
         }
     }
 
