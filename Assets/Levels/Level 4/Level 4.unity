@@ -954,6 +954,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4008566464029169030, guid: 6dde91a9a0e42a3478159f01d41e9a35, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4008566464029169030, guid: 6dde91a9a0e42a3478159f01d41e9a35, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 4008566464029169050, guid: 6dde91a9a0e42a3478159f01d41e9a35, type: 3}
       propertyPath: m_Name
       value: Launch Base
@@ -1681,7 +1689,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5815947826294732484, guid: cf3d341ac1f6e5347869bb077ff248d6, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 8.01
+      value: 9.95
       objectReference: {fileID: 0}
     - target: {fileID: 5815947826294732484, guid: cf3d341ac1f6e5347869bb077ff248d6, type: 3}
       propertyPath: m_LocalPosition.z

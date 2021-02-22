@@ -29,11 +29,11 @@ public class RocketBehavior : MonoBehaviour
 
     [SerializeField] Light thrustLight;
 
-    private bool isPlayingThruster = false;
     private bool toggleThruster = false;
     [SerializeField] float transitionTime = 1.0f;
-    static private int currentSceneIdx = 0;
     private GameState gameState = GameState.playing;
+
+    [SerializeField] int sceneLength = 1;
 
     // Start is called before the first frame update
     void Start()
@@ -103,15 +103,14 @@ public class RocketBehavior : MonoBehaviour
 
     private void loadNextScene()
     {
-        currentSceneIdx++;
-        print("next scene idx " + currentSceneIdx);
+        int currentSceneIdx = SceneManager.GetActiveScene().buildIndex;
+        currentSceneIdx = (currentSceneIdx + 1) % sceneLength;
         SceneManager.LoadScene(currentSceneIdx);
     }
 
     private void resetLevel()
     {
-        currentSceneIdx = 0;
-        SceneManager.LoadScene(currentSceneIdx);
+        SceneManager.LoadScene(0);
     }
 
     void handleThrusting()

@@ -359,6 +359,7 @@ MonoBehaviour:
   victoryParticle: {fileID: 2234122145712522287}
   thrustLight: {fileID: 4683776116517280457}
   transitionTime: 1
+  sceneLength: 4
 --- !u!82 &1191114356
 AudioSource:
   m_ObjectHideFlags: 0
