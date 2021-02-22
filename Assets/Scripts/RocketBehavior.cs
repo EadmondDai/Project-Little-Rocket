@@ -26,7 +26,9 @@ public class RocketBehavior : MonoBehaviour
     [SerializeField] ParticleSystem thrustParticle;
     [SerializeField] ParticleSystem deathParticle;
     [SerializeField] ParticleSystem victoryParticle;
-   
+
+    [SerializeField] Light thrustLight;
+
     private bool isPlayingThruster = false;
     private bool toggleThruster = false;
     [SerializeField] float transitionTime = 1.0f;
@@ -46,6 +48,8 @@ public class RocketBehavior : MonoBehaviour
 
     void processInput()
     {
+        if (gameState != GameState.playing) return;
+
         handleThrusting();
 
         handleRotate();
@@ -91,6 +95,7 @@ public class RocketBehavior : MonoBehaviour
             audioSource.Stop();
             audioSource.PlayOneShot(deathClip);
             deathParticle.Play();
+            thrustParticle.Stop();
             gameState = GameState.dying;
             Invoke("resetLevel", transitionTime);
         }
@@ -128,16 +133,24 @@ public class RocketBehavior : MonoBehaviour
             toggleThruster = false;
         }
 
-        if (toggleThruster && !isPlayingThruster)
+        if(toggleThruster && !thrustLight.enabled)
         {
-            audioSource.PlayOneShot(thrustClip);
-            isPlayingThruster = true;
+            thrustLight.enabled = true;
         }
 
-        if (!toggleThruster && isPlayingThruster)
+        if(!toggleThruster && thrustLight.enabled)
+        {
+            thrustLight.enabled = false;
+        }
+
+        if (toggleThruster && !audioSource.isPlaying)
+        {
+            audioSource.PlayOneShot(thrustClip);
+        }
+
+        if (!toggleThruster && audioSource.isPlaying)
         {
             audioSource.Stop();
-            isPlayingThruster = false;
         }
 
         if(toggleThruster && !thrustParticle.isPlaying)
